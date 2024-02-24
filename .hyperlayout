@@ -1,8 +1,8 @@
 {
-  "default": [
+  "bevy": [
     [
       [
-        "cargo run -p client"
+        "cargo run -p client_bevy"
       ],
       [
         "cargo run -p server"
