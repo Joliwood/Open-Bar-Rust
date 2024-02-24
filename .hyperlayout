@@ -2,7 +2,10 @@
   "default": [
     [
       [
-        "cargo run"
+        "cargo run -p client"
+      ],
+      [
+        "cargo run -p server"
       ]
     ]
   ]
