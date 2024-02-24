@@ -1,7 +1,8 @@
 [workspace]
+# To prevent crash on MacOS (other versions not tested yet)
+resolver = "2"
 
 members = [
-    # To add later one
     "client",
     "server",
 ]
