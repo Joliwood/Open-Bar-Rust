@@ -1,20 +1,23 @@
 mod systems;
-// mod ressources;
+mod ressources;
 
 use bevy::prelude::*;
 // use systems::constants::*;
-// use ressources::*;
+// use ressources::floor;
 use systems::movements::player_movements::player_movements;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
+        .add_plugins((
+            DefaultPlugins,
+            WorldInspectorPlugin::new()
+        ))
         // Background color
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
         .add_systems(Update, bevy::window::close_on_esc)
         // This startup will start only when the game starts
         .add_systems(Startup, setup)
-        // .add_systems(Startup, spawn_floor.run())
         .add_systems(Update, player_movements)
         .run();
 }
@@ -60,16 +63,20 @@ fn setup(
     // TODO - Stuct Game to create to store all data (score, alcools, etc...)
     // mut game: ResMut<Game>
 ) {
-    // circular base
-    commands.spawn(PbrBundle {
-        mesh: meshes.add(Circle::new(4.0)),
-        material: materials.add(Color::WHITE),
-        transform: Transform::from_rotation(Quat::from_rotation_x(-std::f32::consts::FRAC_PI_2)),
-        ..default()
-    });
 
-    // floor
-    // spawn_floor();
+    // WIP Test for export ressources
+    // floor::floor( commands, meshes, materials);
+
+    // circular base
+    commands.spawn((
+        PbrBundle {
+            mesh: meshes.add(Circle::new(4.0)),
+            material: materials.add(Color::WHITE),
+            transform: Transform::from_rotation(Quat::from_rotation_x(-std::f32::consts::FRAC_PI_2)),
+            ..default()
+        },
+        Name::new("Base"))
+    );
 
     // Add a cube / player to visualize translation.
     // TODO - Use SceneBundle for futur use of 3D models
@@ -82,21 +89,28 @@ fn setup(
             ..default()
         },
         Movable::new(entity_spawn),
+        Name::new("Cube / Player")
     ));
 
     // light
-    commands.spawn(PointLightBundle {
-        point_light: PointLight {
-            shadows_enabled: true,
+    commands.spawn((
+        PointLightBundle {
+            point_light: PointLight {
+                shadows_enabled: true,
+                ..default()
+            },
+            transform: Transform::from_xyz(4.0, 8.0, 4.0),
             ..default()
         },
-        transform: Transform::from_xyz(4.0, 8.0, 4.0),
-        ..default()
-    });
+        Name::new("Light")
+    ));
 
     // camera
-    commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(-2.5, 10.5, 9.0).looking_at(Vec3::ZERO, Vec3::Y),
-        ..default()
-    });
+    commands.spawn((
+        Camera3dBundle {
+            transform: Transform::from_xyz(-2.5, 10.5, 9.0).looking_at(Vec3::ZERO, Vec3::Y),
+            ..default()
+            },
+        Name::new("Camera")
+    ));
 }
