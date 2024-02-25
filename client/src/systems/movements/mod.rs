@@ -1,1 +1,1 @@
-pub mod paddle_movements;
+pub mod player_movements;
