@@ -1,19 +1,25 @@
 mod systems;
 mod ressources;
 mod ui;
+mod sounds;
 
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+
+// WIP 
+use bevy_third_person_camera::*;
 
 fn main() {
     App::new()
         .add_plugins((
             DefaultPlugins,
-            WorldInspectorPlugin::new()
+            WorldInspectorPlugin::new(),
+            ThirdPersonCameraPlugin
         ))
         // Background color
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
         .add_systems(Startup, (
+            sounds::audio_source::audio_source,
             ui::ui::ui,
             ressources::floor::floor,
             ressources::player::player,
@@ -21,6 +27,7 @@ fn main() {
             systems::camera::camera::camera
         ))
         .add_systems(Update, (
+            systems::inputs::draw_cursor::draw_cursor,
             systems::movements::player_movements::player_movements, 
             ui::menu_button::menu_button, 
             bevy::window::close_on_esc, systems::inputs::mouse_click_system::mouse_click_system

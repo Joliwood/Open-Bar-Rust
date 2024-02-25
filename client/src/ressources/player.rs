@@ -16,6 +16,6 @@ pub fn player(
           ..default()
       },
       Movable::new(entity_spawn),
-      Name::new("Player")
+      Name::new("Player"),
   ));
 }
