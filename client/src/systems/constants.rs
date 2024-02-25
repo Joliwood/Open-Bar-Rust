@@ -1,6 +1,8 @@
-// use bevy::prelude::{Color, Vec2};
+use bevy::prelude::{
+  Color, 
+  // Vec2,
+};
 
-// pub const Player_SIZE: Vec2 = Vec2::new(20.0, 20.0);
-// pub const Player_COLOR: Color = Color::rgb(0.3, 0.3, 0.7);
-// pub const Player_START_Y: f32 = 0.0;
-// pub const PLAYER_SPEED: f32 = 500.0;
+pub const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
+pub const HOVERED_BUTTON: Color = Color::rgb(0.25, 0.25, 0.25);
+pub const PRESSED_BUTTON: Color = Color::rgb(0.35, 0.75, 0.35);

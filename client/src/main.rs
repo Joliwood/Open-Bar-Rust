@@ -1,10 +1,8 @@
 mod systems;
 mod ressources;
+mod ui;
 
 use bevy::prelude::*;
-// use systems::constants::*;
-// use ressources::floor;
-use systems::movements::player_movements::player_movements;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 fn main() {
@@ -15,10 +13,18 @@ fn main() {
         ))
         // Background color
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
-        .add_systems(Update, bevy::window::close_on_esc)
-        // This startup will start only when the game starts
-        .add_systems(Startup, setup)
-        .add_systems(Update, player_movements)
+        .add_systems(Startup, (
+            ui::ui::ui,
+            ressources::floor::floor,
+            ressources::player::player,
+            systems::lights::light::light,
+            systems::camera::camera::camera
+        ))
+        .add_systems(Update, (
+            systems::movements::player_movements::player_movements, 
+            ui::menu_button::menu_button, 
+            bevy::window::close_on_esc, systems::inputs::mouse_click_system::mouse_click_system
+        ))
         .run();
 }
 
@@ -26,7 +32,7 @@ fn main() {
 // Here it's an arbitrary movement speed, the spawn location, and a maximum distance from it.
 #[derive(Component)]
 
-struct Movable {
+pub struct Movable {
     spawn: Vec3,
     max_distance: f32,
     speed: f32,
@@ -41,76 +47,4 @@ impl Movable {
             speed: 2.0,
         }
     }
-}
-
-// pub struct Player {
-//     entity: Option<Entity>,
-//     i: usize,
-//     j: usize,
-// }
-
-// struct Game {
-//     board: Vec<Vec<Cell>>,
-//     player: Player,
-//     score: i32,
-// }
-
-/// set up a simple 3D scene
-fn setup(
-    mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-    // TODO - Stuct Game to create to store all data (score, alcools, etc...)
-    // mut game: ResMut<Game>
-) {
-
-    // WIP Test for export ressources
-    // floor::floor( commands, meshes, materials);
-
-    // circular base
-    commands.spawn((
-        PbrBundle {
-            mesh: meshes.add(Circle::new(4.0)),
-            material: materials.add(Color::WHITE),
-            transform: Transform::from_rotation(Quat::from_rotation_x(-std::f32::consts::FRAC_PI_2)),
-            ..default()
-        },
-        Name::new("Base"))
-    );
-
-    // Add a cube / player to visualize translation.
-    // TODO - Use SceneBundle for futur use of 3D models
-    let entity_spawn = Vec3::ZERO;
-    commands.spawn((
-        PbrBundle {
-            mesh: meshes.add(Cuboid::default()),
-            material: materials.add(Color::WHITE),
-            transform: Transform::from_translation(entity_spawn),
-            ..default()
-        },
-        Movable::new(entity_spawn),
-        Name::new("Cube / Player")
-    ));
-
-    // light
-    commands.spawn((
-        PointLightBundle {
-            point_light: PointLight {
-                shadows_enabled: true,
-                ..default()
-            },
-            transform: Transform::from_xyz(4.0, 8.0, 4.0),
-            ..default()
-        },
-        Name::new("Light")
-    ));
-
-    // camera
-    commands.spawn((
-        Camera3dBundle {
-            transform: Transform::from_xyz(-2.5, 10.5, 9.0).looking_at(Vec3::ZERO, Vec3::Y),
-            ..default()
-            },
-        Name::new("Camera")
-    ));
 }
