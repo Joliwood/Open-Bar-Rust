@@ -1,4 +1,4 @@
-# Welcome to Lyrics Library
+# Welcome to Rust game !
 
 ## How to read commits in this project
 
