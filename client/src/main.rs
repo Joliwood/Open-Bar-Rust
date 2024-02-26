@@ -5,23 +5,26 @@ mod sounds;
 
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
-
-// WIP 
 use bevy_third_person_camera::*;
+// TODO - Check https://github.com/sburris0/bevy_flycam is compatible with bevy 0.13
+// use bevy_flycam::prelude::*;
 
 fn main() {
     App::new()
         .add_plugins((
             DefaultPlugins,
             WorldInspectorPlugin::new(),
-            ThirdPersonCameraPlugin
+            ThirdPersonCameraPlugin,
         ))
+        // TODO - Check https://github.com/sburris0/bevy_flycam is compatible with bevy 0.13
+        // .add_plugins(PlayerPlugin)
         // Background color
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
         .add_systems(Startup, (
             sounds::audio_source::audio_source,
             ui::ui::ui,
             ressources::floor::floor,
+            ressources::bar::bar,
             ressources::player::player,
             systems::lights::light::light,
             systems::camera::camera::camera
