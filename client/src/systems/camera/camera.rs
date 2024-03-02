@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_third_person_camera::*;
+use bevy_panorbit_camera::PanOrbitCamera;
 
 pub fn camera(mut commands: Commands) {
   commands.spawn((
@@ -9,7 +9,7 @@ pub fn camera(mut commands: Commands) {
         ..default()
         },
     Name::new("Camera"),
-    ThirdPersonCamera::default(),
+    PanOrbitCamera::default(),
   ),
 );
 }

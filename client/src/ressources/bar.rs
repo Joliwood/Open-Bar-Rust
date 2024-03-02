@@ -10,6 +10,8 @@ pub fn bar (
         Vec3::new(0.0, -0.1, 0.0)
     };
 
+    println!("{}", entity_spawn);
+
   commands.spawn((
     SceneBundle {
         transform: Transform::from_translation(entity_spawn),

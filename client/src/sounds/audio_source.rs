@@ -5,7 +5,7 @@ pub fn audio_source(asset_server: Res<AssetServer>, mut commands: Commands) {
       source: asset_server.load("sounds/Simple-Holidays-V3.ogg"),
       settings : PlaybackSettings {
         mode: PlaybackMode::Loop, 
-        speed: 0.8, 
+        speed: 1.0, 
         ..Default::default()
       },
       ..default()

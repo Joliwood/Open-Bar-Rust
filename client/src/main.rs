@@ -1,3 +1,6 @@
+// Exemple of a clippy rule for all this file
+// #![allow(clippy::type_complexity)]
+
 mod systems;
 mod ressources;
 mod ui;
@@ -5,19 +8,14 @@ mod sounds;
 
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
-use bevy_third_person_camera::*;
-// TODO - Check https://github.com/sburris0/bevy_flycam is compatible with bevy 0.13
-// use bevy_flycam::prelude::*;
 
 fn main() {
     App::new()
         .add_plugins((
             DefaultPlugins,
             WorldInspectorPlugin::new(),
-            ThirdPersonCameraPlugin,
+            bevy_panorbit_camera::PanOrbitCameraPlugin,
         ))
-        // TODO - Check https://github.com/sburris0/bevy_flycam is compatible with bevy 0.13
-        // .add_plugins(PlayerPlugin)
         // Background color
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
         .add_systems(Startup, (
@@ -32,8 +30,8 @@ fn main() {
         .add_systems(Update, (
             systems::inputs::draw_cursor::draw_cursor,
             systems::movements::player_movements::player_movements, 
-            ui::menu_button::menu_button, 
-            bevy::window::close_on_esc, systems::inputs::mouse_click_system::mouse_click_system
+            ui::menu_button::menu_button,
+            bevy::window::close_on_esc, systems::inputs::mouse_click_system::mouse_click_system,
         ))
         .run();
 }
