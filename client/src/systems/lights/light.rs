@@ -5,9 +5,10 @@ pub fn light(mut commands: Commands,) {
     PointLightBundle {
         point_light: PointLight {
             shadows_enabled: true,
+            color: Color::ORANGE,
             ..default()
         },
-        transform: Transform::from_xyz(4.0, 8.0, 4.0),
+        transform: Transform::from_xyz(3.1, 4.8, -6.5),
         ..default()
     },
     Name::new("Light")

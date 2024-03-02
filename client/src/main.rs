@@ -8,6 +8,7 @@ mod sounds;
 
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_atmosphere::prelude::*;
 
 fn main() {
     App::new()
@@ -15,17 +16,20 @@ fn main() {
             DefaultPlugins,
             WorldInspectorPlugin::new(),
             bevy_panorbit_camera::PanOrbitCameraPlugin,
+            AtmospherePlugin,
         ))
         // Background color
         .insert_resource(ClearColor(Color::rgb(0.9, 0.9, 0.9)))
         .add_systems(Startup, (
             sounds::audio_source::audio_source,
             ui::ui::ui,
-            ressources::floor::floor,
+            // ressources::floor::floor,
             ressources::bar::bar,
             ressources::player::player,
             systems::lights::light::light,
-            systems::camera::camera::camera
+            systems::camera::camera::camera,
+            setup,
+            ressources::sun::sun,
         ))
         .add_systems(Update, (
             systems::inputs::draw_cursor::draw_cursor,
@@ -34,6 +38,10 @@ fn main() {
             bevy::window::close_on_esc, systems::inputs::mouse_click_system::mouse_click_system,
         ))
         .run();
+}
+
+fn setup(mut commands: Commands) {
+    commands.spawn(AtmosphereCamera::default());
 }
 
 // Define a struct to keep some information about our entity.
@@ -56,3 +64,7 @@ impl Movable {
         }
     }
 }
+
+// Marker for updating the position of the light, not needed unless we have multiple lights
+#[derive(Component)]
+pub struct Sun;
