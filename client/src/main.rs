@@ -36,6 +36,8 @@ fn main() {
             systems::movements::player_movements::player_movements, 
             ui::menu_button::menu_button,
             bevy::window::close_on_esc, systems::inputs::mouse_click_system::mouse_click_system,
+            ressources::player::setup_scene_once_loaded,
+            ressources::player::keyboard_animation_control,
         ))
         .run();
 }
