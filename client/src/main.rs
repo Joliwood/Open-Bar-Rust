@@ -62,7 +62,7 @@ impl Movable {
         Movable {
             spawn,
             max_distance: 5.0,
-            speed: 2.0,
+            speed: 4.0,
         }
     }
 }
