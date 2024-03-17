@@ -13,7 +13,9 @@ pub fn player(
 
   // Insert a resource with the current scene information
   commands.insert_resource(Animations(vec![
+    // Animation -> standing
     asset_server.load("models/barman/barman_v3.glb#Animation0"),
+    // Animation -> walking
     asset_server.load("models/barman/barman_v3.glb#Animation1"),
   ]));
   
@@ -44,7 +46,7 @@ pub fn keyboard_animation_control(
   keyboard_input: Res<ButtonInput<KeyCode>>,
   mut animation_players: Query<&mut AnimationPlayer>,
   animations: Res<Animations>,
-  mut current_animation: Local<usize>,
+  // mut current_animation: Local<usize>,
 ) {
   for mut player in &mut animation_players {
       if keyboard_input.just_pressed(KeyCode::Space) {

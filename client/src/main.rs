@@ -15,7 +15,6 @@ fn main() {
         .add_plugins((
             DefaultPlugins,
             WorldInspectorPlugin::new(),
-            bevy_panorbit_camera::PanOrbitCameraPlugin,
             AtmospherePlugin,
         ))
         // Background color
@@ -23,7 +22,6 @@ fn main() {
         .add_systems(Startup, (
             sounds::audio_source::audio_source,
             ui::ui::ui,
-            // ressources::floor::floor,
             ressources::bar::bar,
             ressources::player::player,
             systems::lights::light::light,
@@ -33,7 +31,7 @@ fn main() {
         ))
         .add_systems(Update, (
             systems::inputs::draw_cursor::draw_cursor,
-            systems::movements::player_movements::player_movements, 
+            systems::movements::player_movements::player_movements,
             ui::menu_button::menu_button,
             bevy::window::close_on_esc, systems::inputs::mouse_click_system::mouse_click_system,
             ressources::player::setup_scene_once_loaded,
@@ -46,10 +44,11 @@ fn setup(mut commands: Commands) {
     commands.spawn(AtmosphereCamera::default());
 }
 
+#[allow(dead_code)]
+
 // Define a struct to keep some information about our entity.
 // Here it's an arbitrary movement speed, the spawn location, and a maximum distance from it.
 #[derive(Component)]
-
 pub struct Movable {
     spawn: Vec3,
     max_distance: f32,
